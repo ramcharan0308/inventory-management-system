@@ -24,6 +24,7 @@ async def lifespan(app: FastAPI):
         alembic_cfg = Config(str(alembic_ini))
         alembic_cfg.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
         command.upgrade(alembic_cfg, "head")
+
     yield
 
 
@@ -38,21 +39,31 @@ def create_application() -> FastAPI:
         lifespan=lifespan,
     )
 
-    # ── Middleware ──────────────────────────────────────────────────────────────
-    app.add_middleware(GZipMiddleware, minimum_size=1000)
+    # Compression
+    app.add_middleware(
+        GZipMiddleware,
+        minimum_size=1000
+    )
+
+    # CORS
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.allowed_origins_list,
+        allow_origins=[
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "https://inventory-management-system-wxud.vercel.app",
+        ],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
 
-    # ── Exception handlers ──────────────────────────────────────────────────────
+    # Exception Handlers
     register_exception_handlers(app)
 
-    # ── Routers ─────────────────────────────────────────────────────────────────
+    # Routers
     API_PREFIX = "/api/v1"
+
     app.include_router(products.router, prefix=API_PREFIX)
     app.include_router(customers.router, prefix=API_PREFIX)
     app.include_router(orders.router, prefix=API_PREFIX)
@@ -60,7 +71,10 @@ def create_application() -> FastAPI:
 
     @app.get("/health", tags=["health"])
     def health_check():
-        return {"status": "ok", "version": settings.APP_VERSION}
+        return {
+            "status": "ok",
+            "version": settings.APP_VERSION,
+        }
 
     return app
 
