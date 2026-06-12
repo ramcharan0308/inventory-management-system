@@ -69,6 +69,14 @@ def create_application() -> FastAPI:
     app.include_router(orders.router, prefix=API_PREFIX)
     app.include_router(dashboard.router, prefix=API_PREFIX)
 
+    @app.get("/")
+    def root():
+        return {
+        "message": "Inventory Management API",
+        "docs": "/api/docs",
+        "health": "/health"
+        }
+
     @app.get("/health", tags=["health"])
     def health_check():
         return {
