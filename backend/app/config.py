@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     # CORS — comma-separated string so it parses from a single env var
-    ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:3000,http://localhost:80"
+    ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:3000,http://localhost:80,https://inventory-management-system-wxud.vercel.app"
 
     # Low-stock threshold used by dashboard
     LOW_STOCK_THRESHOLD: int = 10
