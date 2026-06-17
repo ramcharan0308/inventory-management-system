@@ -9,6 +9,23 @@ Production-ready, containerized full-stack application for managing products, cu
 | Database | PostgreSQL 16 |
 | Containers | Docker, Docker Compose |
 
+## Live Deployment Links
+
+### GitHub Repository
+https://github.com/ramcharan0308/inventory-management-system
+
+### Frontend (Vercel)
+https://inventory-management-system-wxud.vercel.app
+
+### Backend API (Render)
+https://inventory-backend-3k1n.onrender.com
+
+### API Documentation
+https://inventory-backend-3k1n.onrender.com/api/docs
+
+### Docker Hub Image
+https://hub.docker.com/r/ramcharan0308/inventory-backend
+
 ## Architecture
 
 Monorepo layout:
